@@ -6,12 +6,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class Ventana extends JFrame{
     private JPanel panel;
@@ -42,6 +45,8 @@ public class Ventana extends JFrame{
       panel.setLayout(null);
       //panel.setBounds(50, 50, 500, 500);
       this.add(panel);
+      
+      eventoMovimientoRaton();
   }
   private void colocarEtiqueta(){
       JLabel etiqueta = new JLabel("Ingrese su nombre ");
@@ -52,6 +57,10 @@ public class Ventana extends JFrame{
   private void colocarCajaTexto(){
       cajaTxt = new JTextField();
       cajaTxt.setBounds(30, 50, 300, 30);
+//      JScrollPane scroll = new JScrollPane(cajaTxt,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+//      scroll.setBounds(30, 50, 300, 30);
+//      
+//      panel.add(scroll);
       panel.add(cajaTxt);
   }
   private void colocarAreaTexto(){
@@ -59,13 +68,18 @@ public class Ventana extends JFrame{
       areaTexto.setBounds(20, 20, 200, 300);
       areaTexto.setFont(new Font("arial",0,15));
       panel.add(areaTexto);
+      
+      JScrollPane scroll = new JScrollPane(areaTexto,ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+      scroll.setBounds(20, 20, 200, 300);
+      panel.add(scroll);
+      
   }
   private void colocarBoton(){
       btn = new JButton("pulse aqui");
       btn.setBounds(150,350,150,40);
       btn.setFont(new Font("arial",0,15));
       panel.add(btn);
-      eventoOyenteRaton();
+      //eventoOyenteRaton();
      // eventoOyenteDeAccion();
 //      saludo = new JLabel();
 //      saludo.setBounds(50, 200, 300, 40);
@@ -124,6 +138,22 @@ public class Ventana extends JFrame{
       btn.addMouseListener(oyenteRaton);
         
     }
+  private void eventoMovimientoRaton(){
+      MouseMotionListener oyenteMovimientoRaton = new MouseMotionListener(){
+          
+          @Override
+          public void mouseDragged(MouseEvent e) {
+              areaTexto.append("mousedrager\n");
+          }
+
+          @Override
+          public void mouseMoved(MouseEvent e) {
+              areaTexto.append("mousemove\n");
+          }
+      };
+      
+      panel.addMouseMotionListener(oyenteMovimientoRaton);
+  }
 }
 
 
